@@ -4,7 +4,7 @@ export default function Login() {
     <div className="min-h-screen bg-verse-cream flex flex-col items-center justify-center px-8">
       <div className="w-full max-w-md">
         <h1 className="font-serif text-3xl text-center text-verse-dark mb-2">BookVerse</h1>
-        <h2 className="text-xl text-center text-gray-500 mb-12 italic">Welcome Back</h2>
+        <h2 className="text-xl text-center text-gray-500 mb-12 italic">Welcome</h2>
 
         <form className="space-y-6">
           <div>
