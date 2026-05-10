@@ -4,7 +4,7 @@ export default function ProductDetail() {
     <section className="grid md:grid-cols-2 gap-16 mb-24">
       {/* Product Image Section */}
       <div className="flex flex-col items-center">
-        <div className="w-full aspect-[3/4] bg-verse-dark flex items-center justify-center shadow-2xl mb-8 group overflow-hidden">
+        <div className="w-full aspect-3/4 bg-verse-dark flex items-center justify-center shadow-2xl mb-8 group overflow-hidden">
           {/* Placeholder for the dark cover with gold leaf */}
           <div className="text-center p-12 border border-verse-gold/30">
             <div className="text-verse-gold text-4xl mb-6">🪶</div>
