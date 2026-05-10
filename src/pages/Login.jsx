@@ -53,7 +53,7 @@ export default function Login() {
                 </form>
 
 
-                <div class="mt-4 text-center text-sm text-slate-600 border-t border-slate-100 pt-2"><span>Don't have a account?</span>
+                <div class="mt-4 text-center text-sm text-slate-600 border-t border-slate-100 pt-2"><span>Don't have an account?</span>
                     <a href="#" class="font-bold text-slate-900 hover:underline">Register</a>
 
                 </div>
@@ -62,6 +62,6 @@ export default function Login() {
         </div>
     </div>
 
-    
+
   );
 }
