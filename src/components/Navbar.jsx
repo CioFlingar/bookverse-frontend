@@ -14,9 +14,9 @@ export default function Navbar() {
 
           {/* Main Links */}
           <div className="hidden md:flex gap-6 text-sm font-medium text-gray-500">
-            <a href="/" className="hover:text-slate-800 transition-colors">Home</a>
-            <a href="/catalog" className="hover:text-slate-800 transition-colors">Catalog</a>
-            <a href="/dashboard" className="hover:text-slate-800 transition-colors">Dashboard</a>
+            <a href="/" className="hover:text-slate-800 transition-colors active:text-amber-400">Home</a>
+            <a href="/catalog" className="hover:text-slate-800 transition-colors active:text-amber-400">Catalog</a>
+            <a href="/dashboard" className="hover:text-slate-800 transition-colors active:text-amber-400">Dashboard</a>
           </div>
         </div>
 
