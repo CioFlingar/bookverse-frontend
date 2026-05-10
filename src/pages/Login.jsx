@@ -1,16 +1,36 @@
-// src/pages/Login.jsx
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import apiClient from "../api/client";
+
 export default function Login() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await apiClient.post("/auth/login", { email, password });
+      localStorage.setItem("userInfo", JSON.stringify(res.data));
+      navigate("/dashboard");
+    } catch (err) {
+      alert(err.response?.data?.message || "Login failed");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-verse-cream flex flex-col items-center justify-center px-8">
       <div className="w-full max-w-md">
         <h1 className="font-serif text-3xl text-center text-verse-dark mb-2">BookVerse</h1>
         <h2 className="text-xl text-center text-gray-500 mb-12 italic">Welcome Back</h2>
 
-        <form className="space-y-6">
+        <form onSubmit={handleLogin} className="space-y-6">
           <div>
             <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400 block mb-2">Email Address</label>
             <input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-transparent border-b border-gray-300 py-3 focus:outline-none focus:border-verse-dark transition-colors"
             />
           </div>
@@ -22,6 +42,8 @@ export default function Login() {
             </div>
             <input
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full bg-transparent border-b border-gray-300 py-3 focus:outline-none focus:border-verse-dark transition-colors"
             />
           </div>

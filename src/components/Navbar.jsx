@@ -1,11 +1,10 @@
-
-import { Search, ShoppingCart, User } from 'lucide-react';
+import { Search, ShoppingCart, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
     <nav className="border-b border-gray-200 bg-white px-8 py-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-
         {/* Branding [cite: 1, 34] */}
         <div className="flex items-center gap-8">
           <h1 className="text-2xl font-serif font-bold tracking-tight text-verse-dark">
@@ -14,9 +13,21 @@ export default function Navbar() {
 
           {/* Main Links [cite: 40] */}
           <div className="hidden md:flex gap-6 text-sm font-medium text-gray-500">
-            <a href="/" className="hover:text-verse-dark transition-colors">Home</a>
-            <a href="/catalog" className="text-verse-dark border-b-2 border-verse-dark">Catalog</a>
-            <a href="/dashboard" className="hover:text-verse-dark transition-colors">Dashboard</a>
+            <Link to="/" className="hover:text-verse-dark transition-colors">
+              Home
+            </Link>
+            <Link
+              to="/catalog"
+              className="text-verse-dark border-b-2 border-verse-dark"
+            >
+              Catalog
+            </Link>
+            <Link
+              to="/dashboard"
+              className="hover:text-verse-dark transition-colors"
+            >
+              Dashboard
+            </Link>
           </div>
         </div>
 
@@ -35,7 +46,6 @@ export default function Navbar() {
             <User className="w-5 h-5 cursor-pointer" />
           </div>
         </div>
-
       </div>
     </nav>
   );

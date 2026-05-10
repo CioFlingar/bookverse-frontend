@@ -1,25 +1,38 @@
 // src/pages/Dashboard.jsx
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import apiClient from "../api/client";
 import Layout from "../components/Layout";
 import OrderHistory from "../features/dashboard/OrderHistory";
 import ProgressCard from "../features/dashboard/ProgressCard";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
     const fetchDashboardData = async () => {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      if (!userInfo?.token) return navigate("/login");
 
-      const config = {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      };
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        };
 
-      const response = await apiClient.get("/users/profile", config);
+        const response = await apiClient.get("/users/profile", config);
+        setUser(response.data);
+      } catch (err) {
+        localStorage.removeItem("userInfo");
+        navigate("/login");
+      }
     };
+
     fetchDashboardData();
-  }, []);
+  }, [navigate]);
+
   return (
     <Layout>
       <div className="mb-10 flex justify-between items-end">

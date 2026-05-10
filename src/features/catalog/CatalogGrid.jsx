@@ -50,6 +50,7 @@ export default function CatalogGrid() {
         {books.map((book) => (
           <BookCard
             key={book._id}
+            id={book._id}
             category={book.category}
             title={book.title}
             author={book.author}
