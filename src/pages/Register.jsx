@@ -1,6 +1,6 @@
 // src/pages/Register.jsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../api/client";
 
 export default function Register() {
@@ -42,7 +42,7 @@ export default function Register() {
             </p>
           </div>
 
-          <form action="#" onSubmit={handleRegister}  class="space-y-5">
+          <form action="#" onSubmit={handleRegister} class="space-y-5">
             <div class="flex flex-col">
               <label
                 for="name"
@@ -54,7 +54,7 @@ export default function Register() {
                 type="name"
                 id="name"
                 value={name}
-              onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. John Doe"
                 class="border-b border-slate-300 py-2 focus:outline-none focus:border-slate-900 transition-colors placeholder:text-slate-300 text-sm"
               />
@@ -69,7 +69,7 @@ export default function Register() {
               <input
                 type="email"
                 value={email}
-              onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 id="email"
                 placeholder="e.g. reader@bookverse.com"
                 class="border-b border-slate-300 py-2 focus:outline-none focus:border-slate-900 transition-colors
@@ -87,7 +87,7 @@ export default function Register() {
               <input
                 type="password"
                 value={password}
-              onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 id="password"
                 placeholder="........"
                 class="border-b border-slate-300 py-1 focus:outline-none focus:border-slate-900 transition-colors
@@ -124,9 +124,9 @@ export default function Register() {
 
           <div class="mt-3 text-center text-sm text-slate-600 border-t border-slate-100 pt-2">
             <span>Already have an account?</span>
-            <a href="#" class="font-bold text-slate-900 hover:underline">
+            <Link to="/login" class="font-bold text-slate-900 hover:underline">
               Sign In
-            </a>
+            </Link>
           </div>
         </div>
       </div>
