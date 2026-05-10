@@ -1,9 +1,25 @@
 // src/pages/Dashboard.jsx
+import { useEffect } from "react";
+import apiClient from "../api/client";
 import Layout from "../components/Layout";
 import OrderHistory from "../features/dashboard/OrderHistory";
 import ProgressCard from "../features/dashboard/ProgressCard";
 
 export default function Dashboard() {
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const response = await apiClient.get("/users/profile", config);
+    };
+    fetchDashboardData();
+  }, []);
   return (
     <Layout>
       <div className="mb-10 flex justify-between items-end">
