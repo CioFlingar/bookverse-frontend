@@ -1,5 +1,23 @@
-// src/pages/Login.jsx
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import apiClient from "../api/client";
+
 export default function Login() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await apiClient.post("/auth/login", { email, password });
+      localStorage.setItem("userInfo", JSON.stringify(res.data));
+      navigate("/dashboard");
+    } catch (err) {
+      alert(err.response?.data?.message || "Login failed");
+    }
+  };
+
   return (
 
      <div class="font-serif bg-gray-50">
@@ -20,10 +38,11 @@ export default function Login() {
                 </div>
 
 
-                <form action="#" class="space-y-5">
+                <form onSubmit={handleLogin} action="#" class="space-y-5">
                     <div class="flex flex-col">
-                        <label for="email" class="text-left uppercase text-[14px] font-bold tracking-wider text-slate-700">email address</label>
-                        <input type="email" id="email" placeholder="e.g. reader@bookverse.com"
+                        <label for="email"  class="text-left uppercase text-[14px] font-bold tracking-wider text-slate-700">email address</label>
+                        <input type="email" value={email}
+              onChange={(e) => setEmail(e.target.value)} id="email" placeholder="e.g. reader@bookverse.com"
                             class="border-b border-slate-300 py-2 focus:outline-none focus:border-slate-900 transition-colors
                              placeholder:text-slate-300 text-sm"/>
                     </div>
@@ -35,7 +54,8 @@ export default function Login() {
                             <a href="#" class="text-[14px] text-red-400 hover:text-red-600 transition-colors">Forget
                                 Password?</a>
                         </div>
-                        <input type="password" id="password" placeholder="........"
+                        <input type="password" value={password}
+              onChange={(e) => setPassword(e.target.value)} id="password" placeholder="........"
                             class="border-b border-slate-300 py-1 focus:outline-none focus:border-slate-900 transition-colors
                              placeholder:text-slate-300 text-[25px]"/>
                     </div>

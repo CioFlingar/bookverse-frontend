@@ -1,5 +1,29 @@
 // src/pages/Register.jsx
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import apiClient from "../api/client";
+
 export default function Register() {
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await apiClient.post("/auth/register", {
+        name,
+        email,
+        password,
+      });
+      localStorage.setItem("userInfo", JSON.stringify(res.data)); // Save token
+      navigate("/dashboard"); // Redirect to dashboard
+    } catch (err) {
+      alert(err.response?.data?.message || "Registration failed");
+    }
+  };
+
   return (
     <div class="font-serif bg-gray-50">
       <div class="text-center flex flex-col  min-h-screen justify-center items-center p-4 relative">
@@ -18,7 +42,7 @@ export default function Register() {
             </p>
           </div>
 
-          <form action="#" class="space-y-5">
+          <form action="#" onSubmit={handleRegister}  class="space-y-5">
             <div class="flex flex-col">
               <label
                 for="name"
@@ -29,6 +53,8 @@ export default function Register() {
               <input
                 type="name"
                 id="name"
+                value={name}
+              onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. John Doe"
                 class="border-b border-slate-300 py-2 focus:outline-none focus:border-slate-900 transition-colors placeholder:text-slate-300 text-sm"
               />
@@ -42,6 +68,8 @@ export default function Register() {
               </label>
               <input
                 type="email"
+                value={email}
+              onChange={(e) => setEmail(e.target.value)}
                 id="email"
                 placeholder="e.g. reader@bookverse.com"
                 class="border-b border-slate-300 py-2 focus:outline-none focus:border-slate-900 transition-colors
@@ -58,6 +86,8 @@ export default function Register() {
               </label>
               <input
                 type="password"
+                value={password}
+              onChange={(e) => setPassword(e.target.value)}
                 id="password"
                 placeholder="........"
                 class="border-b border-slate-300 py-1 focus:outline-none focus:border-slate-900 transition-colors

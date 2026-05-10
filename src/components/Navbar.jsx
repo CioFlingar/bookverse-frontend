@@ -1,5 +1,5 @@
-
-import { Search, ShoppingCart, User } from 'lucide-react';
+import { Search, ShoppingCart, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
@@ -14,9 +14,11 @@ export default function Navbar() {
 
           {/* Main Links */}
           <div className="hidden md:flex gap-6 text-sm font-medium text-gray-500">
-            <a href="/" className="hover:text-slate-800 transition-colors active:text-amber-400">Home</a>
-            <a href="/catalog" className="hover:text-slate-800 transition-colors active:text-amber-400">Catalog</a>
-            <a href="/dashboard" className="hover:text-slate-800 transition-colors active:text-amber-400">Dashboard</a>
+            <Link to="/" className="hover:text-slate-800 transition-colors active:text-amber-400">Home</Link>
+            <Link
+              to="/catalog" className="hover:text-slate-800 transition-colors active:text-amber-400">Catalog</Link>
+            <Link
+              to="/dashboard" className="hover:text-slate-800 transition-colors active:text-amber-400">Dashboard</Link>
           </div>
         </div>
 
@@ -36,7 +38,6 @@ export default function Navbar() {
             <User className="w-5 h-5 cursor-pointer" />
           </div>
         </div>
-
       </div>
     </nav>
   );
