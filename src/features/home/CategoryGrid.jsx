@@ -9,7 +9,8 @@ const categories = [
 export default function CategoryGrid() {
   return (
     <div className="mb-20">
-      <h3 className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-8 border-b pb-4">
+
+      <h3 className="text-md uppercase tracking-[0.2em] text-slate-800 font-bold mb-8 border-b pb-4">
         Popular Categories
       </h3>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
