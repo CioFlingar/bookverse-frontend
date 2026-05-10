@@ -3,7 +3,8 @@ export default function BookCard({ category, title, author, price, imageColor })
   return (
     <div className="group cursor-pointer">
       {/* Book Cover Placeholder */}
-      <div className={`aspect-[2/3] w-full mb-4 overflow-hidden shadow-sm transition-shadow group-hover:shadow-xl ${imageColor || 'bg-gray-200'} flex items-end p-4`}>
+      <div className={`aspect-2/3 w-full mb-4 overflow-hidden shadow-sm transition-shadow group-hover:shadow-xl ${imageColor || 'bg-gray-200'} flex items-end p-4`}>
+
         {/* Subtle label on the cover as seen in the PDF */}
         <span className="text-[10px] text-white/70 font-serif italic">{title}</span>
       </div>

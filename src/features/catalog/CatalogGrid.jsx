@@ -55,11 +55,11 @@ export default function CatalogGrid() {
             Curated Catalog
           </h2>
           <p className="text-sm text-gray-500 mt-1">
-            Showing 142 titles from independent presses [cite: 49]
+            Showing 142 titles from independent presses
           </p>
         </div>
         <select className="text-sm border-none bg-transparent font-medium focus:ring-0">
-          <option>Sort By: Newest First [cite: 50]</option>
+          <option>Sort By: Newest First</option>
           <option>Price: Low to High</option>
         </select>
       </div>
@@ -85,6 +85,25 @@ export default function CatalogGrid() {
         <span className="cursor-pointer text-gray-400 hover:text-verse-dark">
           12
         </span>
+      </div>
+
+        {/* New Quote */}
+      <div className="mt-10 py-12 px-8">
+        <div className="flex gap-8 max-w-3xl mx-auto items-stretch">
+          {/* Vertical Red Accent */}
+          <div className="w-[2px] bg-red-400" />
+
+          <div className="flex flex-col">
+            <blockquote className="text-slate-700 italic text-base md:text-lg leading-relaxed font-serif">
+              "A truly great book should be read in youth, again in maturity and
+              once more in old age, as a fine building should be seen by morning
+              light, at noon and by moonlight."
+            </blockquote>
+            <cite className="mt-4 text-gray-400/70 text-xs uppercase tracking-widest not-italic">
+              — Robertson Davies
+            </cite>
+          </div>
+        </div>
       </div>
     </div>
   );

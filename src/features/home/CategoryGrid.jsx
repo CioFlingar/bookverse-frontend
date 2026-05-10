@@ -8,13 +8,15 @@ const categories = [
 
 export default function CategoryGrid() {
   return (
-    <div className="mb-20">
-      <h3 className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-8 border-b pb-4">
+    <div className="mb-15">
+
+      <h3 className="text-md uppercase tracking-[0.2em] text-slate-800 font-bold mb-6 pb-4">
         Popular Categories
       </h3>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {categories.map((cat) => (
-          <div key={cat.id} className="group cursor-pointer border border-gray-200 p-6 hover:bg-verse-dark hover:text-white transition-all">
+          <div key={cat.id} className="group cursor-pointer border border-gray-200 p-6 hover:bg-verse-dark
+           hover:text-white transition-all">
             <h4 className="font-serif text-xl mb-1">{cat.name}</h4>
             <p className="text-[10px] uppercase tracking-widest text-gray-400 group-hover:text-verse-gold">
               {cat.count}

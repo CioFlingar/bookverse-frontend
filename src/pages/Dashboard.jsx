@@ -12,15 +12,15 @@ export default function Dashboard() {
             Reading Dashboard{" "}
           </h2>
           <p className="text-sm text-gray-500 mt-1">
-            Management Console [cite: 139, 184]
+            Management Console
           </p>
         </div>
         <div className="flex gap-4">
           <button className="text-xs font-bold uppercase tracking-widest text-gray-400">
-            Library [cite: 156]
+            Library
           </button>
           <button className="text-xs font-bold uppercase tracking-widest text-verse-dark border-b border-verse-dark">
-            Overview [cite: 190]
+            Overview
           </button>
         </div>
       </div>
