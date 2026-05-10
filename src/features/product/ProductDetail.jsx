@@ -15,10 +15,10 @@ export default function ProductDetail() {
         </div>
         <div className="flex gap-4">
           <button className="px-6 py-2 border border-gray-200 text-[10px] uppercase tracking-widest hover:bg-gray-50 transition-colors">
-            Look Inside [cite: 105]
+            Look Inside
           </button>
           <button className="px-6 py-2 border border-gray-200 text-[10px] uppercase tracking-widest hover:bg-gray-50 transition-colors">
-            Wishlist [cite: 106]
+            Wishlist
           </button>
         </div>
       </div>
@@ -26,33 +26,32 @@ export default function ProductDetail() {
       {/* Product Info Section */}
       <div className="flex flex-col justify-center">
         <nav className="text-[10px] uppercase tracking-widest text-gray-400 mb-6">
-          Catalog / Historical Fiction / The Echoes of Silence [cite: 90]
+          Catalog / Historical Fiction / The Echoes of Silence
         </nav>
 
         <h1 className="text-4xl md:text-5xl font-serif text-verse-dark mb-2">
-          The Echoes of Silence [cite: 93]
+          The Echoes of Silence
         </h1>
         <p className="text-gray-500 italic mb-6">
-          by Evelyn Thorne — 4.8 (1.2k Reviews) [cite: 94]
+          by Evelyn Thorne — 4.8 (1.2k Reviews)
         </p>
 
         <div className="flex items-center gap-4 mb-8">
           <span className="text-2xl font-medium text-verse-dark">
-            $32.50 [cite: 95]
+            $32.50
           </span>
           <span className="text-gray-400 line-through text-sm">
-            $45.00 [cite: 96]
+            $45.00
           </span>
           <span className="bg-verse-gold/10 text-verse-gold text-[10px] px-2 py-1 font-bold uppercase tracking-widest">
-            Save 30% [cite: 97]
+            Save 30%
           </span>
         </div>
 
         <p className="text-gray-700 leading-relaxed mb-6">
           In the heart of post-war London, a hidden manuscript unearths a series
-          of letters that could rewrite history. [cite: 98] Thorne’s masterful
-          prose guides us through a labyrinth of forgotten memories... [cite:
-          99]
+          of letters that could rewrite history. Thorne’s masterful
+          prose guides us through a labyrinth of forgotten memories.
         </p>
 
         <div className="grid grid-cols-2 gap-8 py-8 border-y border-gray-100 mb-8">
@@ -60,22 +59,22 @@ export default function ProductDetail() {
             <p className="text-[10px] uppercase text-gray-400 tracking-widest mb-1">
               Format
             </p>
-            <p className="text-sm font-medium">Hardcover [cite: 107]</p>
+            <p className="text-sm font-medium">Hardcover</p>
           </div>
           <div>
             <p className="text-[10px] uppercase text-gray-400 tracking-widest mb-1">
               Pages
             </p>
-            <p className="text-sm font-medium">432 [cite: 108]</p>
+            <p className="text-sm font-medium">432</p>
           </div>
         </div>
 
         <div className="flex gap-4">
           <button className="flex-1 bg-verse-dark text-white py-4 text-xs uppercase tracking-[0.2em] font-bold hover:bg-gray-800 transition-colors">
-            Add to Cart [cite: 103]
+            Add to Cart
           </button>
           <button className="flex-1 border border-verse-dark py-4 text-xs uppercase tracking-[0.2em] font-bold hover:bg-verse-cream transition-colors">
-            Buy Now [cite: 104]
+            Buy Now
           </button>
         </div>
       </div>

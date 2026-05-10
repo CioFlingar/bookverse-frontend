@@ -22,7 +22,7 @@ export default function Reviews() {
       <div className="flex justify-between items-center mb-12">
         <h3 className="text-2xl font-serif">Reader Feedback </h3>
         <button className="text-xs uppercase tracking-widest font-bold border-b border-verse-dark pb-1">
-          Write a Review [cite: 116]
+          Write a Review
         </button>
       </div>
 
@@ -41,7 +41,7 @@ export default function Reviews() {
                   {rev.user}{" "}
                   {rev.verified && (
                     <span className="text-[10px] text-gray-400 font-normal uppercase ml-2">
-                      Verified Purchase [cite: 118, 127]
+                      Verified Purchase
                     </span>
                   )}
                 </h4>
@@ -50,7 +50,7 @@ export default function Reviews() {
                 </span>
               </div>
               <div className="text-verse-gold text-xs mb-4">
-                ★★★★★ [cite: 119, 128]
+                ★★★★★
               </div>
               <p className="text-gray-600 leading-relaxed italic">
                 "{rev.content}"
