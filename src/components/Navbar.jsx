@@ -14,11 +14,11 @@ export default function Navbar() {
 
           {/* Main Links */}
           <div className="hidden md:flex gap-6 text-sm font-medium text-gray-500">
-            <Link to="/" className="hover:text-slate-800 transition-colors active:text-amber-400">Home</Link>
+            <Link to="/" className="hover:text-slate-800">Home</Link>
             <Link
-              to="/catalog" className="hover:text-slate-800 transition-colors active:text-amber-400">Catalog</Link>
+              to="/catalog" className="hover:text-slate-800">Catalog</Link>
             <Link
-              to="/dashboard" className="hover:text-slate-800 transition-colors active:text-amber-400">Dashboard</Link>
+              to="/dashboard" className="hover:text-slate-800">Dashboard</Link>
           </div>
         </div>
 
