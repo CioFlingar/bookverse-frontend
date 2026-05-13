@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="BookVerse">
+  <rect width="64" height="64" rx="14" fill="#1f2937"/>
+  <path d="M16 17c0-2.2 1.8-4 4-4h11c3.3 0 6.3 1.4 8.4 3.6A12 12 0 0 1 48 13h1c2.2 0 4 1.8 4 4v33c0 1.1-.9 2-2 2h-9c-4.2 0-7.8 2-10 5-2.2-3-5.8-5-10-5h-9c-1.1 0-2-.9-2-2V17Z" fill="#f9fafb"/>
+  <path d="M32 20v31M20 22h8M20 30h8M20 38h8M37 22h8M37 30h8M37 38h8" stroke="#2563eb" stroke-width="3" stroke-linecap="round"/>
+</svg>

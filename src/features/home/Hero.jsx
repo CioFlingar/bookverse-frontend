@@ -1,49 +1,68 @@
-export default function Hero() {
+import { Link } from "react-router-dom";
+
+export default function Hero({ book, loading = false, onViewBook, onAddToCart }) {
+  const title = book?.title || "Explore the BookVerse Catalog";
+  const author = book?.author || "Independent authors and timeless voices";
+  const description =
+    book?.description ||
+    "Discover new arrivals, reader favorites, and carefully curated titles from the BookVerse collection.";
+  const image = book?.image || "/images/hero.jpg";
+  const canAddToCart = book?.stock > 0;
+
   return (
-    <section className="bg-white text-slate-800 rounded-sm overflow-hidden mb-16 ">
-      <div className="grid md:grid-cols-2 gap-8 items-center px-10 py-10 md:py-10">
-        {/* Text Content */}
-        <div className="max-w-md">
-          <span className="text-xs uppercase tracking-[0.2em] text-red-400 mb-4 block">
-            Book of the Month ---
+    <section className="mb-16 overflow-hidden rounded-lg border border-slate-200 bg-white text-slate-800 shadow-sm">
+      <div className="grid items-center gap-10 px-6 py-8 md:grid-cols-[1.1fr_0.9fr] md:px-10 lg:px-12 lg:py-12">
+        <div className="max-w-xl">
+          <span className="mb-4 block text-xs font-bold uppercase tracking-[0.2em] text-amber-700">
+            {loading ? "Loading the shelves" : book ? "Featured from the catalog" : "BookVerse"}
           </span>
-          <h2 className="text-3xl font-bold md:text-3xl font-serif mb-6 leading-tight">
-            The Silent Archival of <br /> Lost Echoes
+          <h2 className="mb-5 text-4xl font-bold leading-tight text-slate-950 font-serif md:text-5xl">
+            {title}
           </h2>
-          <p className="text-sm text-slate-500 tracking-widest mb-4 italic">
-            by Elena Sterling
+          <p className="mb-4 text-sm italic tracking-widest text-slate-500">
+            by {author}
           </p>
-          <p className="mb-8 leading-relaxed">
-            "A hauntingly beautiful exploration of memory and the objects we leave behind. Sterling's latest
-            masterpiece redefined the contemporary literacy landscape this season."
+          <p className="mb-8 max-w-2xl leading-7 text-slate-600">
+            {description}
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <button className="px-8 py-3 bg-slate-800 text-white text-xs uppercase tracking-widest
-            font-bold hover:bg-slate-500 transition-colors cursor-pointer">
+            <button
+              onClick={() => (book ? onViewBook(book) : null)}
+              disabled={!book}
+              className="rounded-md bg-slate-900 px-6 py-3 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-slate-800 disabled:bg-slate-300"
+            >
               Explore the Title
             </button>
-            <button className="px-8 py-3 border border-slate-500 text-xs uppercase tracking-widest font-bold
-             hover:bg-slate-500 transition-colors cursor-pointer">
-              Add to Wishlist
+            <button
+              onClick={onAddToCart}
+              disabled={!canAddToCart}
+              className="rounded-md border border-slate-300 bg-white px-6 py-3 text-xs font-bold uppercase tracking-widest text-slate-900 transition-colors hover:border-slate-900 hover:bg-slate-50 disabled:opacity-50"
+            >
+              {book && !canAddToCart ? "Out of Stock" : "Add to Cart"}
             </button>
+            <Link
+              to="/catalog"
+              className="rounded-md px-6 py-3 text-xs font-bold uppercase tracking-widest text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
+            >
+              Browse Catalog
+            </Link>
           </div>
         </div>
 
-        {/* Featured Image Overlay */}
-        <div className="relative flex justify-center">
-          {/* Main Book Cover Placeholder */}
-          <div className="w-54 h-76 bg-gradient-to-br from-verse-gold/20 to-transparent border
-        border-white/10 shadow-2xl flex items-center justify-center relative z-10">
-            {/* <div className="text-verse-gold font-serif text-center p-4"> */}
-              {/* <div className="text-3xl opacity-50">✦</div> */}
-              {/* <img className="mt-4 text-sm tracking-widest uppercase">Sterling</img> */}
-              <img src="../../public/images/hero.jpg" alt="hero image" className="w-54 h-76 mix-blend-multiply"/>
-            {/* </div> */}
+        <div className="flex justify-center md:justify-end">
+          <div className="relative w-full max-w-xs rounded-lg border border-slate-200 bg-slate-100 p-4 shadow-xl">
+            <img
+              src={image}
+              alt={book ? `${book.title} cover` : "BookVerse featured shelf"}
+              className="aspect-[3/4] w-full rounded-md object-cover shadow-md"
+            />
+            {book?.category && (
+              <div className="absolute left-4 top-4 rounded-md bg-white/95 px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm">
+                {book.category}
+              </div>
+            )}
           </div>
-          {/* Decorative background element for that "abstract gold" feel */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-verse-gold/10
-          rounded-full blur-3xl"></div>
         </div>
       </div>
     </section>

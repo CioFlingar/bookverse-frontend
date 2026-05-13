@@ -1,54 +1,45 @@
 // src/components/Layout.jsx
-import { Mail, Share2 } from "lucide-react"; // Example using Lucide icons
+import { Mail, Share2 } from "lucide-react";
 import Navbar from "./Navbar";
 
 export default function Layout({ children }) {
   return (
-    <div className="min-h-screen bg-gray-50 font-sans text-slate-800">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
       <Navbar />
 
-      <main className="max-w-7xl mx-auto py-10 px-8">{children}</main>
+      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">{children}</main>
 
-      {/* Footer & links */}
-      <footer className="mt-10 border-t border-gray-200 py-6 px-8">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-
-          {/* Left Section: Branding */}
+      <footer className="mt-10 border-t border-slate-200 bg-white px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <div className="space-y-2">
             <h2 className="text-slate-800 italic text-2xl font-semibold tracking-tight">
               BookVerse
             </h2>
-            <p className="text-gray-500/70 text-xs uppercase tracking-wider">
-              © 2026-WM BOOKVERSE. THE ART OF READING.
+            <p className="text-xs uppercase tracking-wider text-slate-500">
+              2026 WM BookVerse. The art of reading.
             </p>
           </div>
 
-          {/* Center Section: Navigation Links */}
           <nav className="flex flex-wrap gap-x-8 gap-y-4">
-            <a href="#" className="text-gray-500/80 text-[10px] font-medium uppercase tracking-widest
-            hover:underline decoration-1 underline-offset-4">
+            <a href="#" className="text-[10px] font-medium uppercase tracking-widest text-slate-500 hover:text-slate-900">
               About Our Press
             </a>
-            <a href="#" className="text-gray-500/80 text-[10px] font-medium uppercase tracking-widest
-            hover:underline decoration-1 underline-offset-4">
+            <a href="#" className="text-[10px] font-medium uppercase tracking-widest text-slate-500 hover:text-slate-900">
               Shipping & Returns
             </a>
-            <a href="#" className="text-gray-500/80 text-[10px] font-medium uppercase tracking-widest
-            hover:underline decoration-1 underline-offset-4">
+            <a href="#" className="text-[10px] font-medium uppercase tracking-widest text-slate-500 hover:text-slate-900">
               Privacy Policy
             </a>
-            <a href="#" className="text-gray-500/80 text-[10px] font-medium uppercase tracking-widest
-            hover:underline decoration-1 underline-offset-4">
+            <a href="#" className="text-[10px] font-medium uppercase tracking-widest text-slate-500 hover:text-slate-900">
               Terms of Service
             </a>
           </nav>
 
-          {/* Right Section: Icons */}
           <div className="flex items-center gap-6">
-            <button className="text-gray-500 hover:opacity-70 transition-opacity">
+            <button className="rounded-md p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900">
               <Share2 size={20} strokeWidth={1.5} />
             </button>
-            <button className="text-gray-500 hover:opacity-70 transition-opacity">
+            <button className="rounded-md p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900">
               <Mail size={20} strokeWidth={1.5} />
             </button>
           </div>

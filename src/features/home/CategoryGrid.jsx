@@ -1,27 +1,32 @@
-// src/features/home/CategoryGrid.jsx
-const categories = [
-  { name: 'Fiction', count: '1,240 Titles', id: 12 },
-  { name: 'Philosophy', count: '430 Titles', id: 15 },
-  { name: 'Poetry & Letters', count: '315 Titles', id: 16 },
-  { name: 'History', count: '842 Titles', id: 17 },
-];
+import { Link } from "react-router-dom";
 
-export default function CategoryGrid() {
+export default function CategoryGrid({ categories = [], loading = false }) {
   return (
-    <div className="mb-15">
-
-      <h3 className="text-md uppercase tracking-[0.2em] text-slate-800 font-bold mb-6 pb-4">
+    <div className="mb-14">
+      <h3 className="mb-6 text-sm font-bold uppercase tracking-[0.2em] text-slate-900">
         Popular Categories
       </h3>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {categories.map((cat) => (
-          <div key={cat.id} className="group cursor-pointer border border-gray-200 p-6 hover:bg-verse-dark
-           hover:text-white transition-all">
-            <h4 className="font-serif text-xl mb-1">{cat.name}</h4>
-            <p className="text-[10px] uppercase tracking-widest text-gray-400 group-hover:text-verse-gold">
-              {cat.count}
-            </p>
+        {loading &&
+          [...Array(4)].map((_, index) => (
+            <div key={index} className="h-28 animate-pulse rounded-lg border border-slate-200 bg-white" />
+          ))}
+        {!loading && categories.length === 0 && (
+          <div className="col-span-2 rounded-lg border border-slate-200 bg-white p-6 text-sm text-slate-500 md:col-span-4">
+            Categories will appear once books are added to the catalog.
           </div>
+        )}
+        {!loading && categories.map((cat) => (
+          <Link
+            key={cat.name}
+            to={`/catalog?genre=${encodeURIComponent(cat.name)}`}
+            className="group rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
+          >
+            <h4 className="mb-1 text-lg font-semibold font-serif text-slate-900">{cat.name}</h4>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+              {cat.count} {cat.count === 1 ? "Title" : "Titles"}
+            </p>
+          </Link>
         ))}
       </div>
     </div>

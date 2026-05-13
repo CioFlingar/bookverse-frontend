@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import apiClient from "../api/client";
+import { useAuth } from "../hooks/useAuth";
+import { authService } from "../services/authService";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -20,8 +23,8 @@ export default function Login() {
 
     setLoading(true);
     try {
-      const res = await apiClient.post("/auth/login", { email, password });
-      localStorage.setItem("userInfo", JSON.stringify(res.data));
+      const userData = await authService.login(email, password, rememberMe);
+      login(userData);
       navigate("/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
@@ -107,6 +110,8 @@ export default function Login() {
               <input
                 type="checkbox"
                 id="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
                 className="w-4 h-4 border-slate-300 rounded accent-slate-900"
                 disabled={loading}
               />

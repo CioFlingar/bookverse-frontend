@@ -1,4 +1,6 @@
 // src/features/catalog/Sidebar.jsx
+import StarRating from "../../components/StarRating";
+
 export default function Sidebar() {
   const genres = [
     "Contemporary Fiction",
@@ -70,20 +72,13 @@ export default function Sidebar() {
         />
       </div>
 
-    {/* Ratings Section*/}
+      {/* Ratings Section*/}
       <div>
         <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-4">
           Rating
         </h3>
         <div className="flex items-center gap-1 cursor-pointer group">
-          {/* You can use a loop to render 4 gold stars and 1 gray star */}
-          <div className="flex text-gray-400 text-md">
-            <span>★</span>
-            <span>★</span>
-            <span>★</span>
-            <span>★</span>
-            <span>★</span>
-          </div>
+          <StarRating value={4} size="xs" />
           <span className="text-[10px] text-gray-400/70 font-medium ml-2 uppercase tracking-tight">
             & Up
           </span>

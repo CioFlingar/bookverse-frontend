@@ -1,9 +1,12 @@
 // src/features/product/Reviews.jsx
+import StarRating from "../../components/StarRating";
+
 const reviews = [
   {
     user: "Julianne Devis",
     initials: "JD",
     date: "NOVEMBER 12, 2023",
+    rating: 5,
     content: "Exquisite. I haven't been this moved by a debut novel in years.",
     verified: true,
   },
@@ -11,6 +14,7 @@ const reviews = [
     user: "Marcus Reed",
     initials: "MR",
     date: "OCTOBER 28, 2023",
+    rating: 5,
     content: "The imagery is stunning. Thorne writes with a painterly touch.",
     verified: true,
   },
@@ -49,9 +53,7 @@ export default function Reviews() {
                   {rev.date}
                 </span>
               </div>
-              <div className="text-verse-gold text-xs mb-4">
-                ★★★★★
-              </div>
+              <StarRating value={rev.rating} size="xs" className="mb-4" />
               <p className="text-gray-600 leading-relaxed italic">
                 "{rev.content}"
               </p>
