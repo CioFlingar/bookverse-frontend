@@ -19,7 +19,7 @@ export default function Layout({ children }) {
               BookVerse
             </h2>
             <p className="text-gray-500/70 text-xs uppercase tracking-wider">
-              © 2024 BOOKVERSE. THE ART OF READING.
+              © 2026-WM BOOKVERSE. THE ART OF READING.
             </p>
           </div>
 

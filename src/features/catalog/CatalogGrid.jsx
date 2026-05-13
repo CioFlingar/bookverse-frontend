@@ -37,7 +37,7 @@ export default function CatalogGrid() {
             Curated Catalog
           </h2>
           <p className="text-sm text-gray-500 mt-1">
-            Showing {books.length} titles from independent presses [cite: 49]
+            Showing {books.length} titles from independent presses
           </p>
         </div>
         <select className="text-sm border-none bg-transparent font-medium focus:ring-0">
