@@ -1,11 +1,10 @@
-// src/components/ProtectedRoute.jsx
 import { Navigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 export default function ProtectedRoute({ children }) {
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  const { user } = useAuth();
 
-  if (!userInfo || !userInfo.token) {
-    // If not logged in, redirect to login page
+  if (!user?.token) {
     return <Navigate to="/login" replace />;
   }
 

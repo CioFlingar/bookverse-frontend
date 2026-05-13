@@ -3,7 +3,7 @@ export default function AdminStats({ stats }) {
   const metrics = [
     { label: "Total Revenue", value: `$${stats.totalRevenue.toLocaleString()}` },
     { label: "Catalog Size", value: `${stats.totalBooks} Titles` },
-    { label: "Active Readers", value: stats.activeReaders },
+    { label: "Delivered Orders", value: stats.activeReaders },
     { label: "Inventory Value", value: `$${stats.inventoryValue.toLocaleString()}` }
   ];
 

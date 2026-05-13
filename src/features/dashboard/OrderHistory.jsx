@@ -1,10 +1,32 @@
 // src/features/dashboard/OrderHistory.jsx
+import { useEffect, useState } from "react";
+import StatusBadge from "../../components/StatusBadge";
+import { orderService } from "../../services/orderService";
+
 export default function OrderHistory() {
-  const orders = [
-    { id: '1', item: 'Klara and the Sun', date: 'Oct 24, 2024', status: 'DELIVERED', price: 45.00 },
-    { id: '2', item: 'Norwegian Wood', date: 'Oct 28, 2024', status: 'IN TRANSIT', price: 28.00 },
-    { id: '3', item: 'Design as Art', date: 'Nov 01, 2024', status: 'PROCESSING', price: 55.00 }, 
-  ];
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const data = await orderService.getUserOrders();
+        setOrders(data.slice(0, 5));
+      } catch (err) {
+        console.error("Failed to load orders:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  const getOrderTitle = (order) =>
+    order.items
+      ?.map((item) => item.book?.title)
+      .filter(Boolean)
+      .join(", ") || "Book order";
 
   return (
     <div className="mt-12">
@@ -20,22 +42,37 @@ export default function OrderHistory() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50">
-            {orders.map((order) => (
-              <tr key={order.id} className="group">
-                <td className="py-4 font-medium text-verse-dark">{order.item}</td>
-                <td className="py-4 text-gray-500">{order.date}</td>
-                <td className="py-4">
-                  <span className={`text-[10px] font-bold px-2 py-1 ${
-                    order.status === 'DELIVERED' ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-600'
-                  }`}>
-                    {order.status}
-                  </span>
-                </td>
-                <td className="py-4 text-right">
-                  <button className="text-[10px] uppercase font-bold text-gray-400 hover:text-verse-dark">Details</button>
+            {loading && (
+              <tr>
+                <td className="py-6 text-gray-500" colSpan="4">
+                  Loading orders...
                 </td>
               </tr>
-            ))}
+            )}
+            {!loading && orders.length === 0 && (
+              <tr>
+                <td className="py-6 text-gray-500" colSpan="4">
+                  No recent orders yet.
+                </td>
+              </tr>
+            )}
+            {!loading &&
+              orders.map((order) => (
+                <tr key={order._id} className="group">
+                  <td className="py-4 font-medium text-verse-dark">
+                    {getOrderTitle(order)}
+                  </td>
+                  <td className="py-4 text-gray-500">
+                    {new Date(order.createdAt).toLocaleDateString()}
+                  </td>
+                  <td className="py-4">
+                    <StatusBadge label={order.status} className="rounded" />
+                  </td>
+                  <td className="py-4 text-right text-sm font-semibold text-verse-dark">
+                    ${order.totalPrice?.toFixed(2) || "0.00"}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

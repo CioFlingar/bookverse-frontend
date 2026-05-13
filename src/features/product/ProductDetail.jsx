@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiClient from "../../api/client";
+import StarRating from "../../components/StarRating";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -69,10 +70,10 @@ export default function ProductDetail() {
         <h1 className="text-4xl md:text-5xl font-serif text-verse-dark mb-2">
           {book.title}
         </h1>
-        <p className="text-gray-500 italic mb-6">
-          by {book.author} — {book.rating.toFixed(1)} ({book.reviewsCount || 0}{" "}
-          Reviews)
-        </p>
+        <div className="mb-6">
+          <p className="text-gray-500 italic mb-2">by {book.author}</p>
+          <StarRating value={book.rating} count={book.reviewsCount || 0} />
+        </div>
 
         <div className="flex items-center gap-4 mb-8">
           <span className="text-2xl font-medium text-verse-dark">
