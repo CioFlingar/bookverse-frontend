@@ -36,24 +36,12 @@ export default function Navbar() {
           </Link>
 
           {/* Main Links */}
-          <div className="hidden md:flex gap-6 text-sm font-medium text-slate-500">
-            <Link to="/" className="hover:text-slate-900 transition-colors">
-              Home
-            </Link>
+          <div className="hidden md:flex gap-6 text-sm font-medium text-gray-500">
+            <Link to="/" className="hover:text-slate-800">Home</Link>
             <Link
-              to="/catalog"
-              className="hover:text-slate-900 transition-colors"
-            >
-              Catalog
-            </Link>
-            {isAuthenticated && (
-              <Link
-                to="/dashboard"
-                className="hover:text-slate-900 transition-colors"
-              >
-                Dashboard
-              </Link>
-            )}
+              to="/catalog" className="hover:text-slate-800">Catalog</Link>
+            <Link
+              to="/dashboard" className="hover:text-slate-800">Dashboard</Link>
           </div>
         </div>
 
