@@ -29,12 +29,19 @@ export default function OrderHistory() {
       .join(", ") || "Book order";
 
   return (
-    <div className="mt-12">
-      <h3 className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-6 pb-2 border-b">Recent Orders</h3>
+    <div className="mt-8 rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+      <div className="mb-6">
+        <h3 className="font-serif text-2xl font-bold text-slate-950">
+          Recent Orders
+        </h3>
+        <p className="mt-1 text-sm text-slate-500">
+          Your latest BookVerse purchases and delivery status.
+        </p>
+      </div>
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="text-[10px] uppercase tracking-widest text-gray-400 border-b border-gray-100">
+            <tr className="border-b border-slate-100 text-xs uppercase tracking-[0.16em] text-slate-400">
               <th className="pb-4 font-bold">Item</th>
               <th className="pb-4 font-bold">Date</th>
               <th className="pb-4 font-bold">Status</th>
@@ -44,14 +51,14 @@ export default function OrderHistory() {
           <tbody className="divide-y divide-gray-50">
             {loading && (
               <tr>
-                <td className="py-6 text-gray-500" colSpan="4">
+                <td className="py-6 text-slate-500" colSpan="4">
                   Loading orders...
                 </td>
               </tr>
             )}
             {!loading && orders.length === 0 && (
               <tr>
-                <td className="py-6 text-gray-500" colSpan="4">
+                <td className="py-6 text-slate-500" colSpan="4">
                   No recent orders yet.
                 </td>
               </tr>
@@ -59,16 +66,16 @@ export default function OrderHistory() {
             {!loading &&
               orders.map((order) => (
                 <tr key={order._id} className="group">
-                  <td className="py-4 font-medium text-verse-dark">
+                  <td className="py-4 font-semibold text-slate-900">
                     {getOrderTitle(order)}
                   </td>
-                  <td className="py-4 text-gray-500">
+                  <td className="py-4 text-slate-500">
                     {new Date(order.createdAt).toLocaleDateString()}
                   </td>
                   <td className="py-4">
                     <StatusBadge label={order.status} className="rounded" />
                   </td>
-                  <td className="py-4 text-right text-sm font-semibold text-verse-dark">
+                  <td className="py-4 text-right text-sm font-semibold text-slate-950">
                     ${order.totalPrice?.toFixed(2) || "0.00"}
                   </td>
                 </tr>

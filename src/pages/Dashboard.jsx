@@ -1,5 +1,13 @@
 // src/pages/Dashboard.jsx
 import { useEffect, useState } from "react";
+import {
+  BookOpen,
+  Heart,
+  Library,
+  PackagePlus,
+  ShoppingBag,
+  ShieldCheck,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import BookCard from "../components/BookCard";
@@ -69,6 +77,9 @@ export default function Dashboard() {
     { id: "orders", label: "Orders" },
   ];
   const tabs = isAdmin ? adminTabs : readerTabs;
+  const displayName = profile?.name || user?.name || "Reader";
+  const firstName = displayName.split(" ")[0];
+  const lowStockCount = inventory.filter((book) => Number(book.stock || 0) < 5).length;
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -244,10 +255,25 @@ export default function Dashboard() {
   };
 
   const renderLibrary = () => (
-    <div className="grid md:grid-cols-2 gap-8">
+    <div className="grid gap-6 md:grid-cols-2">
       {library.length === 0 ? (
-        <div className="md:col-span-2 bg-white border border-gray-100 p-6 text-sm text-gray-500">
-          Your library is waiting for its first book.
+        <div className="rounded-lg border border-slate-200 bg-white p-8 text-center shadow-sm md:col-span-2">
+          <div className="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-md bg-slate-100 text-slate-700">
+            <Library className="h-6 w-6" />
+          </div>
+          <h3 className="font-serif text-2xl font-bold text-slate-950">
+            Your library is waiting
+          </h3>
+          <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
+            Start with a book from the catalog and your reading progress will
+            appear here.
+          </p>
+          <Button
+            className="mt-5"
+            onClick={() => navigate("/catalog")}
+          >
+            Browse catalog
+          </Button>
         </div>
       ) : (
         library.map((entry) => (
@@ -267,12 +293,28 @@ export default function Dashboard() {
   const renderWishlist = () => (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {wishlistLoading ? (
-        <div className="rounded-lg border border-slate-200 bg-white p-6 text-sm text-slate-500 sm:col-span-2 lg:col-span-4">
+        <div className="rounded-lg border border-slate-200 bg-white p-6 text-sm text-slate-500 shadow-sm sm:col-span-2 lg:col-span-4">
           Loading wishlist...
         </div>
       ) : wishlist.length === 0 ? (
-        <div className="rounded-lg border border-slate-200 bg-white p-6 text-sm text-slate-500 sm:col-span-2 lg:col-span-4">
-          Your wishlist is empty. Save books from the catalog with the heart button.
+        <div className="rounded-lg border border-slate-200 bg-white p-8 text-center shadow-sm sm:col-span-2 lg:col-span-4">
+          <div className="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-md bg-amber-50 text-amber-700">
+            <Heart className="h-6 w-6" />
+          </div>
+          <h3 className="font-serif text-2xl font-bold text-slate-950">
+            No saved books yet
+          </h3>
+          <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
+            Save books from the catalog with the heart button and they will
+            gather here.
+          </p>
+          <Button
+            variant="secondary"
+            className="mt-5"
+            onClick={() => navigate("/catalog")}
+          >
+            Explore books
+          </Button>
         </div>
       ) : (
         wishlist.map((book) => (
@@ -289,33 +331,55 @@ export default function Dashboard() {
   const renderAdminOverview = () => (
     <>
       {stats && <AdminStats stats={stats} />}
-      <div className="grid md:grid-cols-3 gap-4">
+      <div className="grid gap-4 md:grid-cols-3">
         <button
           onClick={() => setActiveTab("catalog")}
-          className="bg-white border border-gray-100 p-6 text-left hover:border-slate-300 transition-colors"
+          className="rounded-lg border border-slate-200 bg-white p-6 text-left shadow-sm transition-colors hover:border-slate-400"
         >
-          <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-2">
+          <div className="mb-4 grid h-10 w-10 place-items-center rounded-md bg-slate-100 text-slate-700">
+            <BookOpen className="h-5 w-5" />
+          </div>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
             Catalog
           </p>
-          <p className="font-serif text-xl text-verse-dark">Manage books and stock</p>
+          <p className="mt-2 font-serif text-xl font-bold text-slate-950">
+            Manage books and stock
+          </p>
+          <p className="mt-3 text-sm text-slate-500">
+            {inventory.length} titles loaded, {lowStockCount} low stock.
+          </p>
         </button>
         <button
           onClick={() => setActiveTab("orders")}
-          className="bg-white border border-gray-100 p-6 text-left hover:border-slate-300 transition-colors"
+          className="rounded-lg border border-slate-200 bg-white p-6 text-left shadow-sm transition-colors hover:border-slate-400"
         >
-          <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-2">
+          <div className="mb-4 grid h-10 w-10 place-items-center rounded-md bg-amber-50 text-amber-700">
+            <ShoppingBag className="h-5 w-5" />
+          </div>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
             Orders
           </p>
-          <p className="font-serif text-xl text-verse-dark">{totalAdminOrders} orders placed</p>
+          <p className="mt-2 font-serif text-xl font-bold text-slate-950">
+            {totalAdminOrders} orders placed
+          </p>
+          <p className="mt-3 text-sm text-slate-500">
+            Review customers and update fulfillment status.
+          </p>
         </button>
         <button
           onClick={openAddBookModal}
-          className="bg-verse-dark text-white p-6 text-left hover:bg-slate-700 transition-colors"
+          className="rounded-lg bg-slate-900 p-6 text-left text-white shadow-sm transition-colors hover:bg-slate-800"
         >
-          <p className="text-[10px] uppercase tracking-[0.2em] text-white/60 font-bold mb-2">
-            Quick Action
+          <div className="mb-4 grid h-10 w-10 place-items-center rounded-md bg-white/10 text-white">
+            <PackagePlus className="h-5 w-5" />
+          </div>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/60">
+            Quick action
           </p>
-          <p className="font-serif text-xl">Add a new book</p>
+          <p className="mt-2 font-serif text-xl font-bold">Add a new book</p>
+          <p className="mt-3 text-sm text-white/70">
+            Create a fresh catalog entry for shoppers.
+          </p>
         </button>
       </div>
       <AdminOrdersTable
@@ -366,6 +430,35 @@ export default function Dashboard() {
 
     return (
       <>
+        <div className="mb-8 grid gap-4 sm:grid-cols-3">
+          <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
+              Library
+            </p>
+            <p className="mt-2 font-serif text-3xl font-bold text-slate-950">
+              {library.length}
+            </p>
+            <p className="mt-1 text-sm text-slate-500">books in progress</p>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
+              Wishlist
+            </p>
+            <p className="mt-2 font-serif text-3xl font-bold text-slate-950">
+              {wishlist.length}
+            </p>
+            <p className="mt-1 text-sm text-slate-500">saved titles</p>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
+              Account
+            </p>
+            <p className="mt-2 font-serif text-3xl font-bold text-slate-950">
+              Active
+            </p>
+            <p className="mt-1 text-sm text-slate-500">reader profile</p>
+          </div>
+        </div>
         {renderLibrary()}
         <OrderHistory />
       </>
@@ -380,24 +473,50 @@ export default function Dashboard() {
         </div>
       )}
 
-      <div className="mb-10 flex justify-between items-end">
-        <div>
-          <h2 className="text-3xl font-serif text-verse-dark">
-            {isAdmin ? "Management Dashboard" : "Reading Dashboard"}
-          </h2>
-          <p className="text-sm text-gray-500 mt-1">
-            {isAdmin ? "Catalog and inventory controls" : "Your Library"}
-          </p>
+      <section className="mb-8 rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-2xl">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-md bg-slate-100 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-slate-600">
+              <ShieldCheck className="h-4 w-4" />
+              {isAdmin ? "Admin workspace" : "Reader workspace"}
+            </div>
+            <h1 className="font-serif text-4xl font-bold text-slate-950 sm:text-5xl">
+              {isAdmin ? "Management Dashboard" : `Welcome back, ${firstName}`}
+            </h1>
+            <p className="mt-3 text-sm leading-6 text-slate-600 sm:text-base">
+              {isAdmin
+                ? "Keep the catalog, inventory, and customer orders moving from one focused workspace."
+                : "Track your books, saved titles, and recent orders from your personal BookVerse shelf."}
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            {isAdmin && (
+              <Button onClick={openAddBookModal}>
+                <PackagePlus className="h-4 w-4" />
+                Add book
+              </Button>
+            )}
+            <Button
+              variant="secondary"
+              onClick={() => navigate("/catalog")}
+            >
+              <BookOpen className="h-4 w-4" />
+              Browse catalog
+            </Button>
+          </div>
         </div>
-        <div className="flex flex-wrap gap-4">
+      </section>
+
+      <div className="mb-8 overflow-x-auto">
+        <div className="inline-flex min-w-full gap-1 rounded-lg border border-slate-200 bg-white p-1 shadow-sm sm:min-w-0">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`text-xs font-bold uppercase tracking-widest pb-1 transition-colors ${
+              className={`whitespace-nowrap rounded-md px-4 py-2.5 text-sm font-semibold transition-colors ${
                 activeTab === tab.id
-                  ? "text-verse-dark border-b border-verse-dark"
-                  : "text-gray-400 hover:text-slate-700"
+                  ? "bg-slate-900 text-white shadow-sm"
+                  : "text-slate-500 hover:bg-slate-100 hover:text-slate-950"
               }`}
             >
               {tab.label}
@@ -414,7 +533,7 @@ export default function Dashboard() {
         onClose={closeBookModal}
         size="xl"
       >
-        <form onSubmit={handleSaveBook} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form onSubmit={handleSaveBook} className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Input
             label="Title"
             value={bookForm.title}
@@ -486,11 +605,11 @@ export default function Dashboard() {
             onChange={(event) => handleBookFieldChange("releaseDate", event.target.value)}
           />
           <label className="md:col-span-2 flex flex-col gap-1">
-            <span className="text-sm font-semibold text-gray-700">Description</span>
+            <span className="text-sm font-semibold text-slate-700">Description</span>
             <textarea
               value={bookForm.description}
               onChange={(event) => handleBookFieldChange("description", event.target.value)}
-              className="min-h-28 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="min-h-28 rounded border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
             />
           </label>
           <div className="md:col-span-2 flex justify-end gap-3 pt-2">
