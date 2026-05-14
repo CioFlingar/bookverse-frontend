@@ -11,7 +11,23 @@ import { libraryService } from "../services/libraryService";
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../hooks/useAuth";
 import { useWishlist } from "../hooks/useWishlist";
-import { ShoppingCart, Plus, Trash2, Edit3, Heart } from "lucide-react";
+import {
+  ArrowLeft,
+  BookMarked,
+  CheckCircle2,
+  ClipboardList,
+  Edit3,
+  Globe2,
+  Heart,
+  Package,
+  Plus,
+  ShieldCheck,
+  ShoppingCart,
+  Trash2,
+  Truck,
+} from "lucide-react";
+
+const formatCurrency = (value) => `$${Number(value || 0).toFixed(2)}`;
 
 export default function Product() {
   const { id } = useParams();
@@ -133,6 +149,22 @@ export default function Product() {
   const userReview = reviews.find((review) => review.user?._id === currentUserId);
   const canCreateReview = isAuthenticated && (!userReview || editingReviewId);
   const wishlisted = book ? isWishlisted(book._id) : false;
+  const releaseYear = book?.releaseDate ? new Date(book.releaseDate).getFullYear() : "Not listed";
+  const detailItems = book
+    ? [
+        { label: "ISBN", value: book.isbn || "Not listed", icon: ClipboardList },
+        { label: "Pages", value: book.pageCount || "Not listed", icon: BookMarked },
+        { label: "Published", value: releaseYear, icon: ShieldCheck },
+        { label: "Publisher", value: book.publisher || "Not listed", icon: Package },
+        { label: "Language", value: book.language || "Not listed", icon: Globe2 },
+        {
+          label: "Stock",
+          value: book.stock > 0 ? `${book.stock} available` : "Out of stock",
+          icon: Truck,
+          tone: book.stock > 0 ? "text-emerald-700" : "text-red-700",
+        },
+      ]
+    : [];
 
   if (loading) {
     return (
@@ -159,119 +191,172 @@ export default function Product() {
   return (
     <div className="min-h-screen bg-slate-50 font-sans">
       <Navbar />
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <button onClick={() => navigate("/catalog")} className="mb-8 rounded-md px-3 py-2 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900">
-          ← Back to Catalog
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+        <button
+          onClick={() => navigate("/catalog")}
+          className="mb-6 inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-950"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to catalog
         </button>
 
-        <div className="mb-12 grid gap-8 rounded-lg border border-slate-200 bg-white p-5 shadow-sm md:grid-cols-[0.9fr_1.1fr] md:p-8 lg:gap-12">
-          <div className="flex items-center justify-center rounded-lg bg-slate-100 p-4">
-            <img
-              src={book.image || "https://via.placeholder.com/400x500"}
-              alt={book.title}
-              className="max-h-[520px] w-full rounded-md object-cover shadow-md"
-            />
-          </div>
-
-          <div className="space-y-6">
-            <div>
-              <h1 className="mb-2 text-4xl font-bold font-serif text-slate-950">{book.title}</h1>
-              <p className="text-lg text-slate-600 mb-4">by {book.author}</p>
-              
-              <StarRating
-                value={book.rating}
-                count={book.reviewsCount || 0}
-                size="lg"
-                className="mb-4"
-              />
-            </div>
-
-            <div className="space-y-4 rounded-lg border border-slate-200 bg-slate-50 p-5">
-              <div className="flex justify-between">
-                <span className="text-slate-600">ISBN:</span>
-                <span className="font-semibold">{book.isbn || "Not listed"}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-600">Pages:</span>
-                <span className="font-semibold">{book.pageCount || "Not listed"}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-600">Published:</span>
-                <span className="font-semibold">
-                  {book.releaseDate ? new Date(book.releaseDate).getFullYear() : "Not listed"}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-600">Publisher:</span>
-                <span className="font-semibold">{book.publisher || "Not listed"}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-600">Language:</span>
-                <span className="font-semibold">{book.language}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-600">Stock:</span>
-                <span className={`font-semibold ${book.stock > 0 ? "text-green-600" : "text-red-600"}`}>
-                  {book.stock > 0 ? `${book.stock} available` : "Out of Stock"}
-                </span>
+        <section className="mb-8 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+          <div className="grid gap-0 lg:grid-cols-[0.92fr_1.08fr]">
+            <div className="border-b border-slate-200 bg-slate-100 p-6 sm:p-8 lg:border-b-0 lg:border-r">
+              <div className="mx-auto max-w-sm">
+                <div className="relative rounded-lg bg-white p-4 shadow-sm">
+                  {book.category && (
+                    <span className="absolute left-6 top-6 rounded-md bg-white/95 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-slate-600 shadow-sm">
+                      {book.category}
+                    </span>
+                  )}
+                  <img
+                    src={book.image || "https://via.placeholder.com/400x500"}
+                    alt={book.title}
+                    className="aspect-[3/4] w-full rounded-md object-cover shadow-lg"
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="text-4xl font-bold text-slate-950">\${book.price}</div>
+            <div className="p-6 sm:p-8 lg:p-10">
+              <div className="mb-6">
+                <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-amber-700">
+                  BookVerse selection
+                </p>
+                <h1 className="font-serif text-4xl font-bold leading-tight text-slate-950 sm:text-5xl">
+                  {book.title}
+                </h1>
+                <p className="mt-3 text-lg text-slate-600">by {book.author}</p>
 
-            <div className="space-y-3">
-              <Button
-                variant="primary"
-                size="lg"
-                onClick={handleAddToCart}
-                disabled={book.stock === 0}
-                className="w-full"
-              >
-                <ShoppingCart size={20} />
-                Add to Cart
-              </Button>
-              <Button
-                variant="secondary"
-                size="lg"
-                onClick={handleAddToLibrary}
-                className="w-full"
-              >
-                <Plus size={20} />
-                Add to Library
-              </Button>
-              {isAuthenticated && (
+                <div className="mt-5">
+                  <StarRating
+                    value={book.rating}
+                    count={book.reviewsCount || reviews.length || 0}
+                    size="lg"
+                  />
+                </div>
+              </div>
+
+              <div className="mb-6 flex flex-col gap-3 border-y border-slate-100 py-5 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
+                    Price
+                  </p>
+                  <p className="mt-1 font-serif text-4xl font-bold text-slate-950">
+                    {formatCurrency(book.price)}
+                  </p>
+                </div>
+                <span
+                  className={`w-fit rounded-full px-3 py-1 text-sm font-bold ${
+                    book.stock > 0
+                      ? "bg-emerald-50 text-emerald-700"
+                      : "bg-red-50 text-red-700"
+                  }`}
+                >
+                  {book.stock > 0 ? "In stock" : "Out of stock"}
+                </span>
+              </div>
+
+              <div className="mb-6 grid gap-3 sm:grid-cols-2">
+                {detailItems.map(({ label, value, icon: Icon, tone }) => (
+                  <div
+                    key={label}
+                    className="flex items-start gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4"
+                  >
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-white text-slate-500 shadow-sm">
+                      <Icon className="h-4 w-4" />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
+                        {label}
+                      </p>
+                      <p className={`mt-1 truncate text-sm font-semibold text-slate-800 ${tone || ""}`}>
+                        {value}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Button
+                  variant="primary"
+                  size="lg"
+                  onClick={handleAddToCart}
+                  disabled={book.stock === 0}
+                  className="w-full"
+                >
+                  <ShoppingCart size={20} />
+                  Add to cart
+                </Button>
                 <Button
                   variant="secondary"
                   size="lg"
-                  onClick={handleToggleWishlist}
-                  loading={wishlistBusy}
+                  onClick={handleAddToLibrary}
                   className="w-full"
                 >
-                  <Heart size={20} className={wishlisted ? "fill-current text-amber-600" : ""} />
-                  {wishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
+                  <Plus size={20} />
+                  Add to library
                 </Button>
-              )}
+                {isAuthenticated && (
+                  <Button
+                    variant="secondary"
+                    size="lg"
+                    onClick={handleToggleWishlist}
+                    loading={wishlistBusy}
+                    className="w-full sm:col-span-2"
+                  >
+                    <Heart size={20} className={wishlisted ? "fill-current text-amber-600" : ""} />
+                    {wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+                  </Button>
+                )}
+              </div>
+
+              <div className="mt-6 rounded-lg bg-slate-50 p-4">
+                <p className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                  Secure checkout and saved library access with your BookVerse account.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div className="mb-12 rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-2xl font-bold text-slate-900 mb-4">About This Book</h2>
-          <p className="text-slate-600 leading-relaxed">
+        <section className="mb-8 rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-amber-700">
+            About this book
+          </p>
+          <h2 className="mb-4 font-serif text-3xl font-bold text-slate-950">
+            Synopsis
+          </h2>
+          <p className="max-w-4xl text-base leading-8 text-slate-600">
             {book.description || "No description available"}
           </p>
-        </div>
+        </section>
 
-        <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-2xl font-bold text-slate-900 mb-8">Reviews</h2>
+        <section className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-amber-700">
+                Reader feedback
+              </p>
+              <h2 className="font-serif text-3xl font-bold text-slate-950">
+                Reviews
+              </h2>
+            </div>
+            <p className="text-sm text-slate-500">
+              {reviews.length} {reviews.length === 1 ? "review" : "reviews"}
+            </p>
+          </div>
 
           {reviewError && (
             <ErrorAlert message={reviewError} onClose={() => setReviewError("")} className="mb-6" />
           )}
 
           {canCreateReview && (
-            <form onSubmit={handleSubmitReview} className="mb-8 p-6 bg-gray-50 rounded-lg space-y-4">
-              <h3 className="font-semibold text-slate-900">
+            <form onSubmit={handleSubmitReview} className="mb-8 space-y-4 rounded-lg border border-slate-200 bg-slate-50 p-5">
+              <h3 className="font-serif text-xl font-bold text-slate-950">
                 {editingReviewId ? "Edit Your Review" : "Leave a Review"}
               </h3>
               <div>
@@ -288,7 +373,7 @@ export default function Product() {
                 onChange={(e) => setReviewForm({ ...reviewForm, comment: e.target.value })}
                 placeholder="Share your thoughts..."
                 rows="4"
-                className="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
+                className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10"
               />
               <div className="flex flex-wrap gap-3">
                 <Button type="submit" loading={submittingReview}>
@@ -312,23 +397,33 @@ export default function Product() {
           )}
 
           {!isAuthenticated && (
-            <div className="mb-8 rounded-lg border border-slate-200 p-6 text-sm text-slate-600">
-              Sign in to leave a rating or review.
+            <div className="mb-8 flex flex-col gap-3 rounded-lg border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
+              <span>Sign in to leave a rating or review.</span>
+              <Button variant="secondary" onClick={() => navigate("/login")}>
+                Sign in
+              </Button>
             </div>
           )}
 
           <div className="space-y-6">
             {reviews.length === 0 ? (
-              <p className="text-slate-500">No reviews yet. Be the first to review!</p>
+              <div className="rounded-lg border border-dashed border-slate-300 p-8 text-center">
+                <h3 className="font-serif text-2xl font-bold text-slate-950">
+                  No reviews yet
+                </h3>
+                <p className="mt-2 text-sm text-slate-500">
+                  Be the first reader to share a thought about this title.
+                </p>
+              </div>
             ) : (
               reviews.map((review) => (
-                <div key={review._id} className="border-b pb-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
+                <div key={review._id} className="rounded-lg border border-slate-100 p-5">
+                  <div className="mb-3 flex justify-between gap-4">
+                    <div className="min-w-0">
                       <p className="font-semibold text-slate-900">{review.user?.name || "Anonymous"}</p>
                       <StarRating value={review.rating} size="sm" />
                     </div>
-                    <div className="text-right">
+                    <div className="shrink-0 text-right">
                       <span className="text-xs text-slate-500">
                         {new Date(review.createdAt).toLocaleDateString()}
                       </span>
@@ -352,17 +447,18 @@ export default function Product() {
                       )}
                     </div>
                   </div>
-                  <p className="text-slate-700">{review.comment}</p>
+                  <p className="leading-7 text-slate-700">{review.comment}</p>
                   {review.verifiedPurchase && (
-                    <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded mt-2 inline-block">
-                      ✓ Verified Purchase
+                    <span className="mt-3 inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700">
+                      <CheckCircle2 className="h-3.5 w-3.5" />
+                      Verified purchase
                     </span>
                   )}
                 </div>
               ))
             )}
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );
